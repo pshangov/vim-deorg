@@ -4,7 +4,7 @@
 " Latest Revision: 10 January 2021
 
 " DONE: Phase I
-" 
+"
 " Syntax: links, tags, dates - DONE
 " Cycling: todo, priorities - DONE
 " Headings: insert new, promote/demote level - DONE
@@ -14,10 +14,13 @@
 "
 " Markup: bold, italics, underline - DONE
 " Lists: ordered, unordered, descriptions - DONE
-" Clean view: only last star visible
-" Checkboxes
+" checkboxes
 " drawers and properties
-" progress tracking 
+"
+" Phase III
+"
+" clean view: only last star visible
+" progress tracking
 
 " if exists("b:current_syntax")
 "   finish
@@ -35,15 +38,15 @@ syntax match orgText '^[^\*].*$'
 
 """ Headings
 
-syntax match orgHeadingLevel1 '^\*\{1}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive
-syntax match orgHeadingLevel2 '^\*\{2}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive
-syntax match orgHeadingLevel3 '^\*\{3}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive
-syntax match orgHeadingLevel4 '^\*\{4}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive
-syntax match orgHeadingLevel5 '^\*\{5}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive
-syntax match orgHeadingLevel6 '^\*\{6}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive
-syntax match orgHeadingLevel7 '^\*\{7}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive
-syntax match orgHeadingLevel8 '^\*\{8}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive
-syntax match orgHeadingLevel9 '^\*\{9}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive
+syntax match orgHeadingLevel1 '^\*\{1}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgPinned,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive,orgHoldWeek
+syntax match orgHeadingLevel2 '^\*\{2}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgPinned,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive,orgHoldWeek
+syntax match orgHeadingLevel3 '^\*\{3}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgPinned,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive,orgHoldWeek
+syntax match orgHeadingLevel4 '^\*\{4}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgPinned,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive,orgHoldWeek
+syntax match orgHeadingLevel5 '^\*\{5}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgPinned,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive,orgHoldWeek
+syntax match orgHeadingLevel6 '^\*\{6}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgPinned,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive,orgHoldWeek
+syntax match orgHeadingLevel7 '^\*\{7}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgPinned,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive,orgHoldWeek
+syntax match orgHeadingLevel8 '^\*\{8}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgPinned,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive,orgHoldWeek
+syntax match orgHeadingLevel9 '^\*\{9}\s.*$' contains=orgKeywordTodo,orgKeywordProgress,orgBreak,orgPinned,orgKeywordDone,orgPriority,orgTags,orgTimestamp,orgTimestampInactive,orgHoldWeek
 
 """ TODO and DONE
 
@@ -53,7 +56,15 @@ syntax match orgKeywordDone 'DONE\|xxxx' contained
 
 """ Separator
 
+syntax match orgHoldWeek '#MON\|#TUE\|#WED\|#THU\|#FRI\|#SAT\|#SUN' contained
+
+""" Separator
+
 syntax match orgBreak '####\s.*$' contained
+
+""" Pinned
+
+syntax match orgPinned '!!!!\s.*$' contained
 
 """ Priority
 
@@ -98,6 +109,8 @@ syntax match orgTimestamp /\(<\d\d\d\d-\d\d-\d\d \k\k\k>\)/
 syntax match orgTimestamp /\(<\d\d\d\d-\d\d-\d\d \k\k\k \d\d:\d\d>\)/
 "<2003-09-16 Tue 12:00-12:30>
 syntax match orgTimestamp /\(<\d\d\d\d-\d\d-\d\d \k\k\k \d\d:\d\d-\d\d:\d\d>\)/
+"<Mon, 16 Sep 2003>
+syntax match orgTimestamp /\(<\k\k\k, \d\d \k\k\k \d\d\d\d>\)/
 
 "<2003-09-16 Tue>--<2003-09-16 Tue>
 syntax match orgTimestamp /\(<\d\d\d\d-\d\d-\d\d \k\k\k>--<\d\d\d\d-\d\d-\d\d \k\k\k>\)/
@@ -146,7 +159,8 @@ highlight link orgKeywordProgress GruvboxYellowBold
 highlight link orgKeywordDone GruvboxAquaBold
 
 highlight link orgBreak Comment
-" highlight link orgBreak GruvboxGray
+highlight link orgHoldWeek Comment
+highlight link orgPinned GruvboxRedBold
 
 highlight link orgText GruvboxFg3
 
@@ -426,6 +440,33 @@ function! s:GetCurrentHeading(startLine)
     return {'level': headingLevel, 'start': headingStartLine, 'end': headingEndLine, 'children': children, 'folds': folds}
 endfunction
 
+function! s:GetParentHeading(startLine)
+    let currentHeading = s:GetCurrentHeading(a:startLine)
+    let currentLevel = currentHeading.level
+
+    if currentLevel <= 1
+        return
+    elseif a:startLine <= 1
+        return
+    endif
+
+    let targetLevel = currentLevel - 1
+
+    let currentLine = a:startLine - 1
+
+    " Find start of heading
+    while currentLine >= 1
+        let currentLevel = s:GetHeadingLevel(getline(currentLine))
+
+        if currentLevel == targetLevel
+            return currentLine
+        endif
+
+        let currentLine = currentLine - 1
+    endwhile
+
+endfunction
+
 function! s:CreateHeading(dir)
     let heading = s:GetCurrentHeading(line("."))
     if empty(heading) | return | endif
@@ -448,7 +489,8 @@ endfunction
 """""""""""
 
 function! GetMyOrgFoldText()
-    return getline(v:foldstart) . '...'
+    " return getline(v:foldstart) . '...'
+    return getline(v:foldstart)
 endfunction
 
 function! DebugOrgHeading()
@@ -471,8 +513,8 @@ function! GetMyOrgFoldLevel()
     endif
 endfunction
 
-function! s:ToggleOrgFoldLevel()
-    let heading = s:GetCurrentHeading(line("."))
+function! s:ToggleOrgFoldLevel(startLine)
+    let heading = s:GetCurrentHeading(a:startLine)
 
     " not in a heading, nothing to fold
     if !heading.level
@@ -516,6 +558,16 @@ function! s:ToggleOrgFoldLevel()
     endif
 endfunction
 
+function! s:ToggleOrgParentFoldLevel(startLine)
+    let parentLine = s:GetParentHeading(a:startLine)
+
+    if parentLine
+        call s:ToggleOrgFoldLevel(parentLine)
+    else
+        return
+    endif
+endfunction
+
 setlocal foldmethod=expr
 setlocal foldexpr=GetMyOrgFoldLevel()
 setlocal foldtext=GetMyOrgFoldText()
@@ -540,8 +592,13 @@ vmap <silent> <M-Left>     :call <SID>PromoteLineHeading('prev')<CR>gv
 nmap <silent> <M-S-Right>  :call <SID>PromoteNestedHeading('next')<CR>
 nmap <silent> <M-S-Left>   :call <SID>PromoteNestedHeading('prev')<CR>
 
-nmap <silent> <C-Return>   :call <SID>CreateHeading('same')<CR>
+nmap <silent> <C-Enter>    :call <SID>CreateHeading('same')<CR>
+nmap <silent> <C-S-Enter>  :call <SID>CreateHeading('prev')<CR>
+nmap <silent> <C-M-Enter>  :call <SID>CreateHeading('next')<CR>
+
+nmap <silent> <C-Q>        :call <SID>CreateHeading('same')<CR>
 nmap <silent> <C-S-Return> :call <SID>CreateHeading('prev')<CR>
 nmap <silent> <C-M-Return> :call <SID>CreateHeading('next')<CR>
 
-nmap <silent> <Tab>        :call <SID>ToggleOrgFoldLevel()<CR>
+nmap <silent> <Tab>        :call <SID>ToggleOrgFoldLevel(line("."))<CR>
+nmap <silent> <S-Tab>      :call <SID>ToggleOrgParentFoldLevel(line("."))<CR>
